@@ -10,9 +10,15 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  
+  --color-primary: #01959F;
+  --color-primary-dark: #006970;
+  --color-neutral-40: #e0e0e0;
+  --text-m: 14px;
+  --text-l: 16px
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: light) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
