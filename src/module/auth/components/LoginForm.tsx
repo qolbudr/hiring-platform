@@ -11,8 +11,8 @@ export const LoginForm: React.FC = () => {
                 <h2 className="text-lg lg:text-2xl font-semibold">Welcome Back</h2>
                 <h3 className="text-md lg:text-lg">Please login into your account</h3>
                 <form className="space-y-4 mt-6 w-full max-w-[400px] px-4 md:px-10 mb-8">
-                    <Input type="email" placeholder="Email" required />
-                    <Input type="password" placeholder="Password" required />
+                    <Input type="email" placeholder="Email"/>
+                    <Input className="mb-4" type="password" placeholder="Password"/>
                     <Button type="submit">Login</Button>
                 </form>
             </div>
