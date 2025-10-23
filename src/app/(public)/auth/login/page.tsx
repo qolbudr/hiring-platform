@@ -1,5 +1,10 @@
-import { LoginForm } from "@/module/auth/components/LoginForm";
+import { LoginForm } from "@/module/auth/components/loginForm";
 import type React from "react";
+
+export const metadata = {
+  title: "Hiring Platform | Login",
+  description: "Sign in to access your dashboard",
+};
 
 const Login = (): React.JSX.Element => {
     return (
