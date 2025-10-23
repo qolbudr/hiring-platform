@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { auth, db } from "@/shared/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { User } from "@/module/auth/types";
+import { User } from "@/module/auth/types/user";
 import { signJWTToken } from "@/shared/lib/jwt";
 
 

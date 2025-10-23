@@ -1,4 +1,5 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import { User } from "@/module/auth/types/user";
 
 class ApiClient {
     private axiosInstance: AxiosInstance;
@@ -11,9 +12,11 @@ class ApiClient {
     }
 
     private addAuthToken = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
-        const token = localStorage.getItem('authToken');
-        if (token) {
-            config.headers['Authorization'] = `Bearer ${token}`;
+        const storage = localStorage.getItem('auth-storage');
+        const user : User = storage ? JSON.parse(storage).state.user : null;
+
+        if (user) {
+            config.headers['Authorization'] = `Bearer ${user.token}`;
         }
         return config;
     };

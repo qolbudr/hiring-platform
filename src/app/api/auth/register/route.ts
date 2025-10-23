@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { auth, db } from "@/shared/lib/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
-import { User } from "@/module/auth/types";
+import { User } from "@/module/auth/types/user";
 
 export async function POST(req: Request) {
     try {

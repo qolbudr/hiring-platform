@@ -4,14 +4,19 @@ import Image from "next/image";
 import { Input } from "@/shared/components/Input";
 import { Button } from "@/shared/components/Button";
 import AuthService from "@/module/auth/services/authService";
+import { useAuth } from "@/module/auth/hooks/useAuth";
 
 export const LoginForm: React.FC = () => {
+    const { handleLogin, loading } = useAuth();
+
     const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
         try {
-            await AuthService.login('user@gmail.com', 'password');
-        } catch (error: any) {
-            alert(error.message);
+            e.preventDefault();
+            const email = (e.currentTarget as any).email.value;
+            const password = (e.currentTarget as any).password.value;
+            await handleLogin(email, password);
+        } catch (error) {
+            console.error("Login failed", error);
         }
     }
 
@@ -23,9 +28,9 @@ export const LoginForm: React.FC = () => {
                 <h2 className="text-lg lg:text-2xl font-semibold">Welcome Back</h2>
                 <h3 className="text-md lg:text-lg">Please login into your account</h3>
                 <form onSubmit={handleSubmit} className="space-y-4 mt-6 w-full max-w-[400px] px-4 md:px-10 mb-8">
-                    <Input type="email" placeholder="Email" />
-                    <Input className="mb-4" type="password" placeholder="Password" />
-                    <Button type="submit">Login</Button>
+                    <Input name="email" type="email" placeholder="Email" />
+                    <Input className="mb-4" name="password" type="password" placeholder="Password" />
+                    <Button type="submit">{loading ? 'Loading...' : 'Login'}</Button>
                 </form>
             </div>
         </div>
