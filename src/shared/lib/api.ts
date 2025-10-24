@@ -8,7 +8,7 @@ class ApiClient {
         this.axiosInstance = axios.create({
             baseURL,
         });
-        this.axiosInstance.interceptors.request.use(this.addAuthToken);
+        // this.axiosInstance.interceptors.request.use(this.addAuthToken);
     }
 
     private addAuthToken = (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {

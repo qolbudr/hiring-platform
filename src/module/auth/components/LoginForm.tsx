@@ -5,9 +5,11 @@ import { Input } from "@/shared/components/Input";
 import { Button } from "@/shared/components/Button";
 import AuthService from "@/module/auth/services/authService";
 import { useAuth } from "@/module/auth/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export const LoginForm: React.FC = () => {
     const { handleLogin, loading } = useAuth();
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         try {
@@ -15,6 +17,7 @@ export const LoginForm: React.FC = () => {
             const email = (e.currentTarget as any).email.value;
             const password = (e.currentTarget as any).password.value;
             await handleLogin(email, password);
+            router.replace("/dashboard");
         } catch (error) {
             console.error("Login failed", error);
         }

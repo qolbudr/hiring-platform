@@ -15,10 +15,12 @@ export async function POST(req: Request) {
         const userDoc = await getDoc(doc(db, "users", user.uid));
         const userData = userDoc.data();
 
-        const result : User = { id: user.uid, name: userData?.name, email: user.email!, role: userData?.role, createdAt: userData?.createdAt.toDate() };
+        const result: User = { id: user.uid, name: userData?.name, email: user.email!, role: userData?.role, createdAt: userData?.createdAt.toDate() };
         const token = signJWTToken(result);
         result.token = token;
-        return NextResponse.json({ message: "Login successful", data: result }, { status: 200 });
+        const res = NextResponse.json({ message: "Login successful", data: result }, { status: 200 });
+        res.cookies.set("token", token, { httpOnly: true, secure: true, maxAge: 60 * 60 * 24 * 7 });
+        return res;
     } catch (error) {
         return NextResponse.json({ message: "Login failed", error: (error as Error).message }, { status: 500 });
     }
