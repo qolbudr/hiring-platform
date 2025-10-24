@@ -1,9 +1,30 @@
+'use client';
+
 import { JobCard } from "@/module/job/components/jobCard";
 import { Button } from "@/shared/components/Button";
+import { Input } from "@/shared/components/Input";
 import { Tags } from "@/shared/components/Tags";
-import { Icon } from "@iconify/react";
+import { useJobStore } from "@/module/job/store/job.store";
+import { useJob } from "@/module/job/hooks/useJob";
+import { useEffect } from "react";
 
 const JobList = (): React.JSX.Element => {
+  const hook = useJob();
+  const store = useJobStore();
+
+  useEffect(() => { hook.handleGetJob() }, [])
+  
+  const handleSearchKeyDown = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    try {
+      if (e.key === 'Enter') {
+        const query = e.currentTarget.value;
+        hook.handleGetJob(query);
+      }
+    } catch (error) {
+      console.error('Error handling search:', error);
+    }
+  }
+
   return (
     <div className="flex flex-col h-screen w-screen">
       <div className="w-full shadow-md bg-white flex flex-row justify-center fixed left-0 right-0 top-0 z-10">
@@ -14,10 +35,15 @@ const JobList = (): React.JSX.Element => {
       </div>
       <div className="flex flex-1 w-full h-full max-w-7xl mx-auto px-4 py-8 mt-20">
         <div className="flex w-full flex-col h-full lg:flex-row space-y-4 lg:space-x-4">
-          <div className="w-full lg:w-1/4">
-            <JobCard />
+          <div className="w-full lg:w-1/4 space-y-3">
+            <Input onKeyDown={handleSearchKeyDown} placeholder="Search Jobs..." className="mb-4" />
+            {
+              store.jobs.map((job) => (
+                <JobCard key={job.id} />
+              ))
+            }
           </div>
-          <div className="w-full lg:w-3/4 h-full">
+          <div className="hidden lg:block w-full lg:w-3/4 h-full">
             <div className="w-full border border-neutral-40 rounded-lg p-6 h-full">
               <div className="w-full flex flex-wrap items-start justify-between space-y-6 sm:space-y-0">
                 <div className="flex items-start space-x-6">
