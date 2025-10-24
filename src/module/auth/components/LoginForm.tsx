@@ -33,7 +33,7 @@ export const LoginForm: React.FC = () => {
                 <form onSubmit={handleSubmit} className="space-y-4 mt-6 w-full max-w-[400px] px-4 md:px-10 mb-8">
                     <Input name="email" type="email" placeholder="Email" />
                     <Input className="mb-4" name="password" type="password" placeholder="Password" />
-                    <Button type="submit">{loading ? 'Loading...' : 'Login'}</Button>
+                    <Button fullWidth={true} size="large" type="submit">{loading ? 'Loading...' : 'Login'}</Button>
                 </form>
             </div>
         </div>

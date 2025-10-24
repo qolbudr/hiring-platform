@@ -11,7 +11,7 @@ export const Input: React.FC<InputProps> = (props) => {
         'border-red-500': props.errorMessage,
         'bg-neutral-30 cursor-not-allowed': props.disabled,
     },
-        `w-full text-m border-2 border-neutral-40 rounded-md py-2 px-4 outline-none hover:border-primary-focus focus:border-primary transition-colors duration-200`,
+        `w-full text-m border-2 bg-white border-neutral-40 rounded-md py-2 px-4 outline-none hover:border-primary-focus focus:border-primary transition-colors duration-200`,
         props.className
     )
 
