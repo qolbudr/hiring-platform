@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react"
 
-export const JobListCard = (): React.JSX.Element => {
+export const JobCard = (): React.JSX.Element => {
   return (
     <div className="w-full border-2 border-primary py-3 px-4 rounded-lg bg-primary-surface cursor-pointer">
       <div className="flex flex-row space-x-4">

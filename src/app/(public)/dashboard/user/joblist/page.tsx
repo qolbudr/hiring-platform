@@ -1,4 +1,4 @@
-import { JobListCard } from "@/module/joblist/components/joblistCard";
+import { JobCard } from "@/module/job/components/jobCard";
 import { Button } from "@/shared/components/Button";
 import { Tags } from "@/shared/components/Tags";
 import { Icon } from "@iconify/react";
@@ -15,7 +15,7 @@ const JobList = (): React.JSX.Element => {
       <div className="flex flex-1 w-full h-full max-w-7xl mx-auto px-4 py-8 mt-20">
         <div className="flex w-full flex-col h-full lg:flex-row space-y-4 lg:space-x-4">
           <div className="w-full lg:w-1/4">
-            <JobListCard />
+            <JobCard />
           </div>
           <div className="w-full lg:w-3/4 h-full">
             <div className="w-full border border-neutral-40 rounded-lg p-6 h-full">
