@@ -12,10 +12,13 @@
   --font-mono: var(--font-geist-mono);
   
   --color-primary: #01959F;
+  --color-primary-focus: #01959F33;
   --color-primary-dark: #006970;
   --color-neutral-40: #e0e0e0;
+  --color-neutral-30: #EDEDED;
   --text-m: 14px;
   --text-l: 16px
+  --text-s: 12px;
 }
 
 @media (prefers-color-scheme: light) {
