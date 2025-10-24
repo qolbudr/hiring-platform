@@ -24,9 +24,9 @@ export const LoginForm: React.FC = () => {
     }
 
     return (
-        <div className="w-full max-w-[360px] md:max-w-[1024px] flex flex-row items-stretch">
+        <div className="w-full max-w-[360px] md:max-w-5xl flex flex-row items-stretch">
             <img src="/login-illustration.jpeg" alt="login-illustration" className="hidden md:block w-1/2 object-cover rounded-l-lg" />
-            <div className="w-full border border-[#e0e0e0] rounded-lg md:rounded-l-none w-full p-6 text-center flex flex-col items-center justify-center">
+            <div className="w-full border border-neutral-40 rounded-lg md:rounded-l-none p-6 text-center flex flex-col items-center justify-center">
                 <Image src="/logo.png" alt="logo" width={100} height={40} />
                 <h2 className="text-lg lg:text-2xl font-semibold">Welcome Back</h2>
                 <h3 className="text-md lg:text-lg">Please login into your account</h3>

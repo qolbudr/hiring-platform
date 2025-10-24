@@ -17,7 +17,7 @@ export const Input: React.FC<InputProps> = (props) => {
 
     return (
         <div className="flex flex-col items-start">
-            {props.label && <label className="mb-2 text-s font-regular">{props.label}</label>}
+            {props.label && <label className="mb-2 text-s font-normal">{props.label}</label>}
             <input
                 {...props}
                 className={className}

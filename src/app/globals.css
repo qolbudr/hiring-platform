@@ -14,11 +14,19 @@
   --color-primary: #01959F;
   --color-primary-focus: #01959F33;
   --color-primary-dark: #006970;
+  --color-primary-surface: #F7FEFF;
   --color-neutral-40: #e0e0e0;
   --color-neutral-30: #EDEDED;
+  --color-neutral-70: #757575;
+  --color-neutral-80: #616161;
+  --color-neutral-90: #404040;
+  --color-success-main: #43936C;
+  --color-secondary-main: #FBC037;
+  --color-danger-main: #E11428;
   --text-m: 14px;
-  --text-l: 16px
+  --text-l: 16px;
   --text-s: 12px;
+  --text-xl: 18px;
 }
 
 @media (prefers-color-scheme: light) {
