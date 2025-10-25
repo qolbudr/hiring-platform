@@ -2,7 +2,7 @@ export interface Job {
   id: string;
   slug: string;
   title: string;
-  status: 'active' | 'closed';
+  status: 'active' | 'inactive' | 'draft';
   salary_range: {
     min: number;
     max: number;
@@ -15,29 +15,61 @@ export interface Job {
     badge: string;
     started_on_text: string;
     cta: string;
-  }
+  };
+  application_form?: ApplicationForm;
+}
+
+interface ApplicationForm {
+  sections: Section[];
+}
+
+interface Section {
+  title: string;
+  fields: Field[];
+}
+
+export interface Field {
+  key: string;
+  validation: Validation;
+}
+
+interface Validation {
+  required: boolean | undefined;
 }
 
 export namespace Job {
   export function parse(data: any): Job {
     return {
-      id: data.id,
-      slug: data.slug,
-      title: data.title,
+      id: String(data.id),
+      slug: String(data.slug),
+      title: String(data.title),
       status: data.status,
       salary_range: {
-        min: data.salary_range.min,
-        max: data.salary_range.max,
-        currency: data.salary_range.currency,
-        display_text: data.salary_range.display_text,
+        min: Number(data.salary_range?.min ?? 0),
+        max: Number(data.salary_range?.max ?? 0),
+        currency: String(data.salary_range?.currency ?? ''),
+        display_text: String(data.salary_range?.display_text ?? ''),
       },
-      description: data.description,
-      location: data.location,
+      description: Array.isArray(data.description) ? data.description : [],
+      location: String(data.location ?? ''),
       list_card: {
-        badge: data.list_card.badge,
-        started_on_text: data.list_card.started_on_text,
-        cta: data.list_card.cta,
+        badge: String(data.list_card?.badge ?? ''),
+        started_on_text: String(data.list_card?.started_on_text ?? ''),
+        cta: String(data.list_card?.cta ?? ''),
       },
+      application_form: data.application_form
+        ? {
+          sections: (data.application_form.sections || []).map((section: any) => ({
+            title: String(section.title ?? ''),
+            fields: (section.fields || []).map((field: any) => ({
+              key: String(field.key ?? ''),
+              validation: {
+                required: Boolean(field.validation?.required ?? false),
+              },
+            })),
+          })),
+        }
+        : undefined,
     };
   }
 }

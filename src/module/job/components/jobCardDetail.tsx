@@ -21,12 +21,12 @@ export const JobCardDetail = ({ job }: JobCardDetailProps): React.JSX.Element =>
                 <img src="/logo.png" alt="jobs-icon" className="w-full"></img>
               </div>
               <div className="space-y-2">
-                <Tags text={`${job?.list_card?.badge}`} />
+                <Tags text={'Full Time'} />
                 <h2 className="font-bold text-xl">{job?.title}</h2>
                 <h5 className="font-normal text-neutral-70 text-m">Rakamin</h5>
               </div>
             </div>
-            <Button variant="secondary" className="w-full sm:w-auto">{job?.list_card?.cta}</Button>
+            <Button variant="secondary" className="w-full sm:w-auto">Apply</Button>
           </div>
           <hr className="border-t border-neutral-40 my-6" />
           <ul className="list-disc text-m font-normal list-inside">

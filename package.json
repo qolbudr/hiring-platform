@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@iconify/react": "^6.0.2",
     "@types/jsonwebtoken": "^9.0.10",
     "axios": "^1.12.2",
@@ -19,8 +20,10 @@
     "next": "16.0.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-hook-form": "^7.65.0",
     "react-spinners": "^0.17.0",
     "use-debounce": "^10.0.6",
+    "zod": "^4.1.12",
     "zustand": "^5.0.8"
   },
   "devDependencies": {

@@ -1,3 +1,4 @@
+import "@/shared/extensions/string.extension";
 import { Navbar } from "@/shared/components/Navbar"
 
 export const DashboardLayout = ({ children }: { children: React.ReactNode }) => {

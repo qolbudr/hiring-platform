@@ -22,7 +22,7 @@ export const Tags: React.FC<TagsProps> = ({ variant = "filled", type = "success"
     "border border-danger-main": variant === "outline" && type === "error",
     "border border-secondary-main": variant === "outline" && type === "warning",
   },
-    `inline-flex items-center py-1 px-2 rounded-sm text-s font-bold`,
+    `inline-flex items-center py-1 px-2 rounded-md text-s font-bold`,
   )
   return (
     <div className={className}>

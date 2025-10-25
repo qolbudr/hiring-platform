@@ -29,8 +29,9 @@ const JobList = (): React.JSX.Element => {
         <div className="w-full py-10 px-4 mb-8 border-b border-b-neutral-40">
           <Input
             onChange={debounced}
-            placeholder="Search Jobs..."
+            placeholder="Search by job details"
             className="max-w-7xl mx-auto"
+            suffixicon="uil:search"
           />
         </div>
 
