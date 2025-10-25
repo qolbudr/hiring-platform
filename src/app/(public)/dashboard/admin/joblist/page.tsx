@@ -1,35 +1,26 @@
 'use client';
 
-import { JobCard } from "@/module/job/components/jobCard";
 import { Input } from "@/shared/components/Input";
 import { useJobStore } from "@/module/job/store/job.store";
-import { useJob } from "@/module/job/hooks/useJob";
 import { useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { Loader } from "@/shared/components/Loader";
 import { DashboardLayout } from "../../dahboard_layout";
 import { Button } from "@/shared/components/Button";
 import { JobCardAdmin } from "@/module/job/components/jobCardAdmin";
-import { Modal } from "@/shared/components/Modal";
 import { useModalStore } from "@/shared/store/modal.store";
-import { Chip } from "@/shared/components/Chip";
-import { TextArea } from "@/shared/components/TextArea";
-import Select from "@/shared/components/Select";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { ModalCreateJob } from "@/module/job/components/modalCreateJob";
 
 const JobList = (): React.JSX.Element => {
-  const hook = useJob();
   const store = useJobStore();
   const modal = useModalStore();
 
   useEffect(() => {
-    hook.handleGetJob();
+    store.getJob('');
   }, []);
 
   const debounced = useDebouncedCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => hook.handleGetJob(e.target.value),
+    (e: React.ChangeEvent<HTMLInputElement>) => store.getJob(e.target.value),
     300
   );
 
@@ -46,13 +37,13 @@ const JobList = (): React.JSX.Element => {
                 suffixicon="uil:search"
               />
 
-              {hook.status.isLoading && (
+              {store.status.isLoading && (
                 <div className="flex w-full h-full justify-center items-center">
                   <Loader />
                 </div>
               )}
 
-              {!hook.status.isLoading && hook.status.isEmpty && (
+              {!store.status.isLoading && store.status.isEmpty && (
                 <div className="flex w-full h-full justify-center items-center">
                   <div className="text-center">
                     <img src="/illustration/empty.png" alt="empty-illustration" className="w-[300px] mb-4" />
@@ -63,7 +54,7 @@ const JobList = (): React.JSX.Element => {
                 </div>
               )}
 
-              {!hook.status.isLoading && !hook.status.isEmpty && (
+              {!store.status.isLoading && !store.status.isEmpty && (
                 <>
                   {store.jobs.map((job) => (
                     <JobCardAdmin

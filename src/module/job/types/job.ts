@@ -1,5 +1,5 @@
 export interface Job {
-  id: string;
+  id?: string;
   slug: string;
   title: string;
   status: 'active' | 'inactive' | 'draft';

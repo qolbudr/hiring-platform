@@ -1,4 +1,5 @@
 import "@/shared/extensions/string.extension";
+import "@/shared/extensions/number.extension";
 import { Navbar } from "@/shared/components/Navbar"
 
 export const DashboardLayout = ({ children }: { children: React.ReactNode }) => {

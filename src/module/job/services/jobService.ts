@@ -8,5 +8,11 @@ const getJobs = async (name: string): Promise<Job[]> => {
   return body.data;
 };
 
-export default { getJobs };
+const createJob = async (job: Job): Promise<Job> => {
+  const response = await apiClient.post<BaseResponse<Job>>('/job', job);
+  const body = response.data;
+  return body.data;
+};
+
+export default { getJobs, createJob };
 

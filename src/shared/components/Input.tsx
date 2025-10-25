@@ -17,7 +17,7 @@ export const Input: React.FC<InputProps> = (props) => {
     )
 
     return (
-        <div className={`w-full ${props.className || ''}`}>
+        <div className={`w-full text-start ${props.className || ''}`}>
             {props.label && <label className="block mb-2 text-s font-normal">{props.label} {props.required ? <span className="text-red-500">*</span> : null} </label>}
             <div className="relative">
                 <input

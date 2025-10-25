@@ -3,7 +3,6 @@
 import { JobCard } from "@/module/job/components/jobCard";
 import { Input } from "@/shared/components/Input";
 import { useJobStore } from "@/module/job/store/job.store";
-import { useJob } from "@/module/job/hooks/useJob";
 import { useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { Loader } from "@/shared/components/Loader";
@@ -11,15 +10,14 @@ import { DashboardLayout } from "../../dahboard_layout";
 import { JobCardDetail } from "@/module/job/components/jobCardDetail";
 
 const JobList = (): React.JSX.Element => {
-  const hook = useJob();
   const store = useJobStore();
 
   useEffect(() => {
-    hook.handleGetJob();
+    store.getJob('');
   }, []);
 
   const debounced = useDebouncedCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => hook.handleGetJob(e.target.value),
+    (e: React.ChangeEvent<HTMLInputElement>) => store.getJob(e.target.value),
     300
   );
 
@@ -36,13 +34,13 @@ const JobList = (): React.JSX.Element => {
         </div>
 
         <div className="w-full h-full max-w-7xl flex-1 px-4 mx-auto">
-          {hook.status.isLoading && (
+          {store.status.isLoading && (
             <div className="flex w-full h-full justify-center items-center py-20">
               <Loader />
             </div>
           )}
 
-          {!hook.status.isLoading && hook.status.isEmpty && (
+          {!store.status.isLoading && store.status.isEmpty && (
             <div className="flex w-full h-full justify-center items-center py-20">
               <div className="text-center">
                 <img src="/illustration/empty.png" alt="empty-illustration" className="w-[300px] mb-4" />
@@ -52,7 +50,7 @@ const JobList = (): React.JSX.Element => {
             </div>
           )}
 
-          {!hook.status.isLoading && !hook.status.isEmpty && (
+          {!store.status.isLoading && !store.status.isEmpty && (
             <div className="flex w-full flex-col h-full lg:flex-row space-y-4 lg:space-x-4">
               <div className="w-full lg:w-1/4 space-y-3">
                 {store.jobs.map((job) => (

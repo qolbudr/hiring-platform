@@ -8,11 +8,13 @@ import { Input } from "@/shared/components/Input";
 import Select from "@/shared/components/Select";
 import { TextArea } from "@/shared/components/TextArea";
 import { Chip } from "@/shared/components/Chip";
+import { useModalStore } from "@/shared/store/modal.store";
 
 export const ModalCreateJob = () => {
   const store = useJobStore();
+  const modal = useModalStore();
 
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<CreateJobFromValues>({
+  const { register, handleSubmit, watch, setValue, formState: { errors }, reset } = useForm<CreateJobFromValues>({
     resolver: zodResolver(createJobSchema),
     defaultValues: {
       jobType: "full_time",
@@ -21,12 +23,18 @@ export const ModalCreateJob = () => {
     reValidateMode: "onBlur",
   });
 
+  const createJob = async (data: CreateJobFromValues) => {
+    await store.createJob(data);
+    reset();
+    modal.closeModal("create-job");
+  }
+
   return (
     <Modal
       identifier="create-job"
       title="Job Details"
       cta={[
-        <Button onClick={handleSubmit(store.handleCreateJob)} type="submit">Publish Job</Button>
+        <Button onClick={handleSubmit(createJob)} type="submit">{store.status.isLoading ? 'Loading...' : 'Publish Job'}</Button>
       ]}
     >
       <div className="py-4 px-6 space-y-4">
