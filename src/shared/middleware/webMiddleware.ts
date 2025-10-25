@@ -16,10 +16,14 @@ export async function handleWebMiddleware(req: NextRequest) {
 
   if (token) {
     try {
-      await jwtVerify(token, new TextEncoder().encode(SECRET_KEY!));
+      const user = await jwtVerify(token, new TextEncoder().encode(SECRET_KEY!));
 
       if (publicPaths.includes(pathname)) {
-        return NextResponse.redirect(new URL("/dashboard", req.url));
+        if(user.payload.role === "admin") {
+          return NextResponse.redirect(new URL("/dashboard/admin/joblist", req.url));
+        }
+
+        return NextResponse.redirect(new URL("/dashboard/user/joblist", req.url));
       }
       return NextResponse.next();
     } catch {
