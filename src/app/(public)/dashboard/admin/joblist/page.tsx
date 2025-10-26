@@ -5,7 +5,6 @@ import { useJobStore } from "@/module/job/store/job.store";
 import { useEffect } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { Loader } from "@/shared/components/Loader";
-import { DashboardLayout } from "../../dahboard_layout";
 import { Button } from "@/shared/components/Button";
 import { JobCardAdmin } from "@/module/job/components/jobCardAdmin";
 import { useModalStore } from "@/shared/store/modal.store";
@@ -25,7 +24,7 @@ const JobList = (): React.JSX.Element => {
   );
 
   return (
-    <DashboardLayout>
+    <>
       <div className="flex flex-col w-full mx-auto py-8 mt-10 h-full">
         <div className="w-full h-full max-w-7xl mt-8 flex-1 px-4 mx-auto">
           <div className="flex w-full flex-col h-full lg:flex-row space-y-4 lg:space-x-4 items-start">
@@ -86,7 +85,7 @@ const JobList = (): React.JSX.Element => {
         </div>
       </div>
       <ModalCreateJob />
-    </DashboardLayout>
+    </>
   );
 };
 

@@ -1,8 +1,10 @@
+'use client';
+
 import "@/shared/extensions/string.extension";
 import "@/shared/extensions/number.extension";
 import { Navbar } from "@/shared/components/Navbar"
 
-export const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   return <>
     <div className="flex flex-col h-screen w-screen">
       <Navbar />
@@ -10,3 +12,5 @@ export const DashboardLayout = ({ children }: { children: React.ReactNode }) => 
     </div>
   </>
 }
+
+export default DashboardLayout;

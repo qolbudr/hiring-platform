@@ -1,9 +1,9 @@
-import { IconifyIcon } from "@iconify/react";
+import { Icon, IconifyIcon } from "@iconify/react";
 import classNames from "classnames";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     size?: 'small' | 'medium' | 'large';
-    variant?: 'primary' | 'secondary';
+    variant?: 'primary' | 'secondary' | 'outline';
     icon?: string | IconifyIcon;
     fullWidth?: boolean;
 }
@@ -15,9 +15,10 @@ export const Button: React.FC<ButtonProps> = ({ size = 'medium', variant = 'prim
         'py-[6px] px-6 text-l font-bold': size === 'large',
         'bg-primary text-white': variant === 'primary',
         'bg-secondary-main text-neutral-90': variant === 'secondary',
+        'border border-neutral-40 text-neutral-90': variant === 'outline',
         'w-full': fullWidth,
     },
-        'cursor-pointer rounded-md transition-colors duration-200',
+        'cursor-pointer rounded-md transition-colors duration-200 flex items-center',
         props.className,
     )
 
@@ -25,6 +26,7 @@ export const Button: React.FC<ButtonProps> = ({ size = 'medium', variant = 'prim
         <button
             {...props}
             className={className}>
+            {props.icon && <Icon icon={props.icon} className="mr-2" />}
             {props.children}
         </button>
     );
