@@ -1,11 +1,14 @@
 'use client';
 
+import { useJobStore } from "@/module/job/store/job.store";
 import { Button } from "@/shared/components/Button";
 import { DatePicker } from "@/shared/components/DatePicker";
 import { Input } from "@/shared/components/Input";
+import { ModalPhotoPicker } from "@/shared/components/ModalPhotoPicker";
 import { PhoneInput } from "@/shared/components/PhoneInput";
 import { RadioSelector } from "@/shared/components/RadioSelector";
 import Select from "@/shared/components/Select";
+import { useModalStore } from "@/shared/store/modal.store";
 import { Icon } from "@iconify/react";
 import React from "react";
 
@@ -15,8 +18,11 @@ interface ApplyPageProps {
 
 const Apply = ({ params }: ApplyPageProps): React.JSX.Element => {
   const { id } = React.use(params);
+  const store = useJobStore();
+  const modal = useModalStore();
 
   return <>
+    <ModalPhotoPicker />
     <div className="flex flex-col w-full mx-auto pt-28 pb-10 h-full">
       <div className="w-full h-full max-w-3xl flex-1 px-4 mx-auto">
         <div className="w-full h-full flex flex-col border border-neutral-40">
@@ -31,8 +37,8 @@ const Apply = ({ params }: ApplyPageProps): React.JSX.Element => {
             <p className="text-danger-main text-s font-bold">* Required</p>
             <div className="space-y-2">
               <label className="block text-s font-bold">Photo Profile</label>
-              <img src="https://ui-avatars.com/api/?name=User" alt="upload-photo" className="size-32 rounded-full" />
-              <Button icon="uil:upload" className="shadow-sm" variant="outline">Take a Pitcure</Button>
+              <img src={store.capturedPhoto ? store.capturedPhoto : "https://ui-avatars.com/api/?name=User"} alt="upload-photo" className="size-32 object-cover rounded-full" />
+              <Button onClick={() => modal.openModal('photo-picker-modal')} icon="uil:upload" className="shadow-sm" variant="outline">Take a Pitcure</Button>
             </div>
             <Input
               label="Full Name"
@@ -40,7 +46,7 @@ const Apply = ({ params }: ApplyPageProps): React.JSX.Element => {
               required
             />
             <DatePicker label="Date of birth" required />
-            <RadioSelector 
+            <RadioSelector
               label="Pronoun (gender)"
               required
               options={

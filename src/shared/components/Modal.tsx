@@ -6,6 +6,7 @@ import { Button } from "./Button";
 interface ModalProps {
   identifier: string;
   title: string;
+  subtitle?: string;
   children: React.ReactNode;
   cta?: React.ReactNode[];
 }
@@ -34,7 +35,10 @@ export const Modal = (props: ModalProps) => {
         className={`bg-white rounded-xl shadow-lg w-full max-w-4xl max-h-[] relative transform transition-all duration-200
         ${modal.isOpen(props.identifier) ? "scale-100 opacity-100" : "scale-95 opacity-0"}`}>
         <div className="flex justify-between items-center p-6">
-          <h2 className="text-xl font-bold">{props.title}</h2>
+          <div>
+            <h2 className="text-xl font-bold">{props.title}</h2>
+            {props.subtitle && <h4 className="text-s">{props.subtitle}</h4>}
+          </div>
           <button
             onClick={() => modal.closeModal(props.identifier)}
             className="text-gray-400 hover:text-gray-700">
@@ -43,7 +47,7 @@ export const Modal = (props: ModalProps) => {
         </div>
 
         <hr className="border-t border-neutral-40" />
-        <div className="w-full h-full max-h-[60vh] overflow-y-auto">
+        <div className="w-full h-full max-h-[80vh] overflow-y-auto">
           {props.children}
         </div>
 

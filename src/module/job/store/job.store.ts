@@ -9,7 +9,9 @@ interface JobState {
   status: BaseStatus,
   jobs: Job[],
   field: Field[],
+  capturedPhoto: string | null,
   selectedJob: Job | null,
+  setCapturedPhoto: (photo: string | null) => void,
   setJobs: (jobs: Job[]) => void,
   setSelectedJob: (job: Job | null) => void
   setRequiredField: (fieldKey: string, required: boolean | undefined) => void,
@@ -21,6 +23,7 @@ export const useJobStore = create<JobState>()(
   (set, get) => ({
     status: BaseStatus.initial(),
     jobs: [],
+    capturedPhoto: null,
     field: [
       { "key": "full_name", "validation": { "required": true } },
       { "key": "photo_profile", "validation": { "required": true } },
@@ -89,6 +92,7 @@ export const useJobStore = create<JobState>()(
       } catch (error: any) {
         set({ status: BaseStatus.error(error.message || 'Failed to fetch jobs') });
       }
-    }
+    },
+    setCapturedPhoto: (photo: string | null) => set({ capturedPhoto: photo }),
   }),
 )
