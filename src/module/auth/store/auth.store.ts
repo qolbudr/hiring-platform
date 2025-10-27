@@ -10,7 +10,7 @@ interface AuthState {
   user: User | null
   setUser: (user: User) => void,
   login: (data: LoginFormValues) => Promise<User | undefined>,
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 export const useAuthStore = create<AuthState>()(
@@ -29,7 +29,10 @@ export const useAuthStore = create<AuthState>()(
         }
       },
       setUser: (user) => set({ user }),
-      logout: () => set({ user: null }),
+      logout: async () => {
+        await authService.logOut();
+        set({ user: null });
+      },
     }),
     { name: 'auth-storage' } // stored in localStorage
   )

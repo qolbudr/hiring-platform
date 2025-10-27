@@ -16,7 +16,9 @@ const login = async (email: string, password: string): Promise<User> => {
 };
 
 const logOut = async (): Promise<void> => {
-    // await signOut(auth);
+    const response = await apiClient.get<BaseResponse<void>>('/auth/logout');
+    const body = response.data;
+    return body.data;
 };
 
 export default { register, login, logOut };
