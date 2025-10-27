@@ -74,6 +74,8 @@ const Applications = ({ params }: ApplicationsPageProps): React.JSX.Element => {
   const table = useReactTable({
     data,
     columns,
+    enableColumnResizing: true,
+    columnResizeMode: 'onChange',
     getCoreRowModel: getCoreRowModel(),
   });
 
@@ -106,8 +108,21 @@ const Applications = ({ params }: ApplicationsPageProps): React.JSX.Element => {
                     {table.getHeaderGroups().map((headerGroup) => (
                       <tr key={headerGroup.id}>
                         {headerGroup.headers.map((header) => (
-                          <th key={header.id} className="p-3 text-left border-b border-neutral-30">
-                            {flexRender(header.column.columnDef.header, header.getContext())}
+                          <th key={header.id} className="p-3 text-left border-b border-neutral-30" style={{ position: 'relative', width: header.getSize() }}>
+                            {header.isPlaceholder
+                              ? null
+                              : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                            {header.column.getCanResize() && (
+                              <div
+                                onMouseDown={header.getResizeHandler()}
+                                onTouchStart={header.getResizeHandler()}
+                                className={`resizer ${header.column.getIsResizing() ? 'isResizing' : ''
+                                  }`}
+                              ></div>
+                            )}
                           </th>
                         ))}
                       </tr>
@@ -121,7 +136,7 @@ const Applications = ({ params }: ApplicationsPageProps): React.JSX.Element => {
                           }`}
                       >
                         {row.getVisibleCells().map((cell) => (
-                          <td key={cell.id} className="p-3 border-b border-neutral-30">
+                          <td key={cell.id} style={{ width: cell.column.getSize() }} className="p-3 border-b border-neutral-30">
                             {flexRender(cell.column.columnDef.cell, cell.getContext())}
                           </td>
                         ))}
