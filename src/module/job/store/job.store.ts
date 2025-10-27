@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { CreateJobFromValues } from "@/module/job/schema/job.schema";
 import jobService from "../services/jobService";
 import { BaseStatus } from "@/shared/types/base_status";
-import { Application, ApplicationAttribute } from "../types/application";
+import { Application, ApplicationAttribute } from "../../applications/types/application";
 
 interface JobState {
   status: BaseStatus,
