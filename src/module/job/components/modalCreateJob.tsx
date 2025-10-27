@@ -43,7 +43,7 @@ export const ModalCreateJob = () => {
           placeholder="Ex. Front End Engineer"
           {...register("jobName")}
           error={errors.jobName?.message}
-          required
+          isRequired={true}
         />
         <Select
           {...register("jobType")}
@@ -58,7 +58,7 @@ export const ModalCreateJob = () => {
             { label: 'Internship', value: 'internship' },
             { label: 'Freelance', value: 'freelance' },
           ]}
-          required
+          isRequired={true}
         />
         <TextArea
           rows={5}
@@ -72,7 +72,7 @@ export const ModalCreateJob = () => {
           placeholder="Ex. 2"
           {...register("candidatesNeeded", { valueAsNumber: true })}
           error={errors.candidatesNeeded?.message}
-          required
+          isRequired={true}
         />
         <hr className="border-t border-dashed border-neutral-40 my-4" />
         <label className="block mb-4 text-s">Job Salary</label>
@@ -82,14 +82,14 @@ export const ModalCreateJob = () => {
             placeholder="Ex. $50,000"
             {...register("minSalary", { valueAsNumber: true })}
             error={errors.minSalary?.message}
-            required
+            isRequired={true}
           />
           <Input
             label="Maximum Estimated Salary"
             placeholder="Ex. $70,000"
             {...register("maxSalary", { valueAsNumber: true })}
             error={errors.maxSalary?.message}
-            required
+            isRequired={true}
           />
         </div>
         <div className="border rounded-lg border-neutral-30 p-4">

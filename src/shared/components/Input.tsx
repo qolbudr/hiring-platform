@@ -7,37 +7,38 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     disabled?: boolean;
     prefixicon?: string | IconifyIcon;
     suffixicon?: string | IconifyIcon;
+    isRequired?: boolean;
 }
 
-export const Input: React.FC<InputProps> = (props) => {
+export const Input: React.FC<InputProps> = ({error, disabled, prefixicon, suffixicon, isRequired, ...props}) => {
     const className = classNames({
-        'border-red-500 hover:border-red-600 focus:border-red-500': props.error,
-        'bg-neutral-30 cursor-not-allowed': props.disabled,
-        'pl-10': props.prefixicon,
+        'border-red-500 hover:border-red-600 focus:border-red-500': error,
+        'bg-neutral-30 cursor-not-allowed': disabled,
+        'pl-10': prefixicon,
     },
         `w-full text-m border-2 bg-white border-neutral-40 rounded-md py-2 px-4 outline-none hover:border-primary-focus focus:border-primary transition-colors duration-200`
     )
 
     return (
         <div className={`w-full text-start ${props.className || ''}`}>
-            {props.label && <label className="block mb-2 text-s font-normal">{props.label} {props.required ? <span className="text-red-500">*</span> : null} </label>}
+            {props.label && <label className="block mb-2 text-s font-normal">{props.label} {isRequired ? <span className="text-red-500">*</span> : null} </label>}
             <div className="relative">
                 <input
                     {...props}
                     className={className}
                 />
-                {props.suffixicon && (
+                {suffixicon && (
                     <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-                        <Icon icon={props.suffixicon} className="text-primary size-6" />
+                        <Icon icon={suffixicon} className="text-primary size-6" />
                     </div>
                 )}
-                {props.prefixicon && (
+                {prefixicon && (
                     <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                        <Icon icon={props.prefixicon} className="text-primary size-4" />
+                        <Icon icon={prefixicon} className="text-primary size-4" />
                     </div>
                 )}
             </div>
-            {props.error && <p className="mt-1 text-red-500 text-s">{props.error}</p>}
+            {error && <p className="mt-1 text-red-500 text-s">{error}</p>}
         </div>
     );
 }

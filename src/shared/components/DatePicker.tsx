@@ -108,6 +108,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({ date, onChangeDate, ...p
         </span>
       </div>
 
+      {props.error && <p className="mt-1 text-red-500 text-s">{props.error}</p>}
+
+
       {showCalendar && (
         <div className="absolute mt-2 p-4 bg-white border border-neutral-40 rounded-xl shadow-md z-50">
           <div className="flex justify-between items-center mb-2">

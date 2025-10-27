@@ -19,23 +19,30 @@ const countries: Country[] = [
   { name: "Rwanda", code: "+250", cc: "RW" },
 ];
 
-
 interface PhoneInputProps {
   label?: string;
   required?: boolean;
   error?: string;
   disabled?: boolean;
+  onChangePhone?: (phone: string) => void;
 }
 
-export const PhoneInput: React.FC<PhoneInputProps> = (props: PhoneInputProps) => {
+export const PhoneInput: React.FC<PhoneInputProps> = ({label, required, error, disabled, onChangePhone, ...props}: PhoneInputProps) => {
   const [selectedCountry, setSelectedCountry] = useState<Country>(countries[0]);
   const [showDropdown, setShowDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  const onSetNumber = (value: string) => {
+    setPhoneNumber(value);
+    if (onChangePhone) {
+      onChangePhone(selectedCountry.code + value);
+    }
+  }
+
   const className = classNames({
-    'border-red-500 hover:border-red-600 focus:border-red-500': props.error,
-    'bg-neutral-30 cursor-not-allowed': props.disabled,
+    'border-red-500 hover:border-red-600 focus:border-red-500': error,
+    'bg-neutral-30 cursor-not-allowed': disabled,
   },
     `w-full flex items-center text-m cursor-pointer border-2 bg-white border-neutral-40 rounded-md outline-none hover:border-primary-focus focus:border-primary transition-colors duration-200`
   )
@@ -52,7 +59,7 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props: PhoneInputProps) =>
 
   return (
     <div className="relative w-full">
-      {props.label && <label className="block mb-2 text-s font-normal">{props.label} {props.required ? <span className="text-red-500">*</span> : null} </label>}
+      {label && <label className="block mb-2 text-s font-normal">{label} {required ? <span className="text-red-500">*</span> : null} </label>}
 
       <div className={className}>
         <button
@@ -76,12 +83,15 @@ export const PhoneInput: React.FC<PhoneInputProps> = (props: PhoneInputProps) =>
         <span className="px-2 text-gray-600">{selectedCountry.code}</span>
         <input
           type="tel"
+          {...props}
           placeholder="81XXXXXXXXX"
           value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          onChange={(e) => onSetNumber(e.target.value)}
           className="flex-1 px-2 py-2 outline-none text-gray-800"
         />
       </div>
+
+      {error && <p className="mt-1 text-red-500 text-s">{error}</p>}
 
       {showDropdown && (
         <div className="absolute z-10 mt-1 w-full bg-white border border-neutral-40 max-w-sm rounded-lg shadow-sm">

@@ -19,7 +19,7 @@ export interface Job {
   application_form?: ApplicationForm;
 }
 
-interface ApplicationForm {
+export interface ApplicationForm {
   sections: Section[];
 }
 
@@ -64,7 +64,7 @@ export namespace Job {
             fields: (section.fields || []).map((field: any) => ({
               key: String(field.key ?? ''),
               validation: {
-                required: Boolean(field.validation?.required ?? false),
+                required: field.validation?.hasOwnProperty('required') ? Boolean(field.validation?.required) : null,
               },
             })),
           })),

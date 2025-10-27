@@ -6,12 +6,16 @@ import { drawResults, takeSnapshot, detectGesture } from "@/shared/lib/camera";
 import { Icon } from "@iconify/react";
 import { useJobStore } from "@/module/job/store/job.store";
 
+interface ModalPhotoPickerProps {
+  onChange: (value: string) => void,
+}
+
 const CAMERA_WIDTH = 640;
 const CAMERA_HEIGHT = 480;
 const MODEL_URL = "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task";
 const WASM_URL = "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@latest/wasm";
 
-export const ModalPhotoPicker: React.FC = () => {
+export const ModalPhotoPicker: React.FC<ModalPhotoPickerProps> = (props: ModalPhotoPickerProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [isCapturing, setIsCapturing] = useState(false);
@@ -68,11 +72,10 @@ export const ModalPhotoPicker: React.FC = () => {
 
               if (!isCapturing && gesture === 3) {
                 setIsCapturing(true);
-                takeSnapshot(video, store.setCapturedPhoto);
-                setTimeout(() => {
-                  setIsCapturing(false);
-                  modal.closeModal("photo-picker-modal");
-                }, 2000);
+                takeSnapshot(video, props.onChange);
+                await new Promise((resolve) => setTimeout(resolve, 1000));
+                setIsCapturing(false);
+                modal.closeModal("photo-picker-modal");
               }
             } else {
               setDetectedPose(null);

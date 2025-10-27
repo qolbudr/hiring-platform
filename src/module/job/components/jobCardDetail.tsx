@@ -29,7 +29,7 @@ export const JobCardDetail = ({ job }: JobCardDetailProps): React.JSX.Element =>
                 <h5 className="font-normal text-neutral-70 text-m">Rakamin</h5>
               </div>
             </div>
-            <Button onClick={() => router.replace(`/dashboard/user/apply/${job.id}`)} variant="secondary" className="w-full sm:w-auto">Apply</Button>
+            <Button onClick={() => router.push(`/dashboard/user/apply/${job.id}`)} variant="secondary" className="w-full sm:w-auto">Apply</Button>
           </div>
           <hr className="border-t border-neutral-40 my-6" />
           <ul className="list-disc text-m font-normal list-inside">

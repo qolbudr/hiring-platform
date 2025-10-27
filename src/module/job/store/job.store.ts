@@ -1,27 +1,33 @@
 import { Field, Job } from "@/module/job/types/job";
 import { create } from "zustand";
-import { CreateJobFromValues, createJobSchema } from "@/module/job/schema/job.schema";
+import { CreateJobFromValues } from "@/module/job/schema/job.schema";
 import jobService from "../services/jobService";
 import { BaseStatus } from "@/shared/types/base_status";
-import { ca } from "zod/locales";
+import { Application, ApplicationAttribute } from "../types/application";
 
 interface JobState {
   status: BaseStatus,
+  applyStatus: BaseStatus,
   jobs: Job[],
+  job: Job | null,
   field: Field[],
   capturedPhoto: string | null,
   selectedJob: Job | null,
+  detailJob: (id: string) => Promise<Job>
   setCapturedPhoto: (photo: string | null) => void,
   setJobs: (jobs: Job[]) => void,
   setSelectedJob: (job: Job | null) => void
   setRequiredField: (fieldKey: string, required: boolean | undefined) => void,
   createJob: (data: CreateJobFromValues) => Promise<void>
   getJob: (name: string) => Promise<void>
+  applyJob: (jobId: string, userId: string, data: { [key: string]: any }) => Promise<void>
 }
 
 export const useJobStore = create<JobState>()(
   (set, get) => ({
+    job: null,
     status: BaseStatus.initial(),
+    applyStatus: BaseStatus.initial(),
     jobs: [],
     capturedPhoto: null,
     field: [
@@ -91,6 +97,38 @@ export const useJobStore = create<JobState>()(
         set({ jobs, status: BaseStatus.success() });
       } catch (error: any) {
         set({ status: BaseStatus.error(error.message || 'Failed to fetch jobs') });
+      }
+    },
+    detailJob: async (id: string) => {
+      try {
+        set({ status: BaseStatus.loading() });
+        const job = await jobService.getJobById(id);
+        set({ job, status: BaseStatus.success() });
+        return job;
+      } catch (error: any) {
+        set({ status: BaseStatus.error(error.message || 'Failed to fetch job details') });
+        throw error;
+      }
+    },
+    applyJob: async (jobId: string, userId: string, data: { [key: string]: any }) => {
+      try {
+        set({ applyStatus: BaseStatus.loading() });
+
+        const attributes: ApplicationAttribute[] = [];
+
+        Object.entries(data).map(([key, value]) => {
+          attributes.push({key, label: key.replaceAll('_', ' ').capitalizeWords(), value: String(value), order: attributes.length + 1});
+        });
+
+        const applicationData: Application = {
+          job_id: jobId,
+          user_id: userId,
+          attributes: attributes,
+        }
+        await jobService.applyJob(applicationData);
+        set({ applyStatus: BaseStatus.success() });
+      } catch (error: any) {
+        set({ applyStatus: BaseStatus.error(error.message || 'Failed to apply for job') });
       }
     },
     setCapturedPhoto: (photo: string | null) => set({ capturedPhoto: photo }),
