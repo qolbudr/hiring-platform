@@ -1,8 +1,11 @@
+'use client';
+
 import { Icon } from "@iconify/react"
 import { Job } from "@/module/job/types/job";
 import classNames from "classnames";
 import { Tags } from "@/shared/components/Tags";
 import { Button } from "@/shared/components/Button";
+import { useRouter } from "next/navigation";
 
 interface JobCardAdminProps extends React.HTMLAttributes<HTMLDivElement> {
   job: Job;
@@ -10,6 +13,8 @@ interface JobCardAdminProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const JobCardAdmin = ({ job, onClick }: JobCardAdminProps): React.JSX.Element => {
+  const router = useRouter();
+
   return (
     <div className="w-full p-6 rounded-lg cursor-pointer shadow-md" onClick={onClick}>
       <div className="flex justify-between items-end">
@@ -21,7 +26,7 @@ export const JobCardAdmin = ({ job, onClick }: JobCardAdminProps): React.JSX.Ele
           <h4 className="text-xl font-bold">{job.title}</h4>
           <p className="text-l text-neutral-80">{job.salary_range.display_text}</p>
         </div>
-        <Button>{job.list_card.cta}</Button> 
+        <Button onClick={() => router.push('/dashboard/admin/applications/' + job.id)}>{job.list_card.cta}</Button> 
       </div>
     </div>
   )

@@ -25,6 +25,14 @@ export async function handleWebMiddleware(req: NextRequest) {
 
         return NextResponse.redirect(new URL("/dashboard/user/joblist", req.url));
       }
+
+      if (req.url.includes("/dashboard/admin") && user.payload.role !== "admin") {
+        return NextResponse.redirect(new URL("/dashboard/user/joblist", req.url));
+      }
+
+      if (req.url.includes("/dashboard/user") && user.payload.role !== "user") {
+        return NextResponse.redirect(new URL("/dashboard/admin/joblist", req.url));
+      }
       return NextResponse.next();
     } catch {
       const res = NextResponse.redirect(new URL("/auth/login", req.url));
