@@ -36,7 +36,7 @@ export const LoginForm: React.FC = () => {
                     <h3 className="text-xl font-semibold">Masuk ke Rakamin</h3>
                     <p className="text-m mb-6">Belum punya akun? <a href="#" className="text-primary">Daftar menggunakan email</a></p>
                     <Input label="Alamat email" className="mb-4" placeholder="Email" {...register('email')} error={errors.email?.message} />
-                    <Input label="Kata sandi" type="password" placeholder="Password" {...register('password')} error={errors.password?.message} />
+                    <Input label="Kata sandi" withShowHide={true} type="password" placeholder="Password" {...register('password')} error={errors.password?.message} />
                     <div className="text-right text-m w-full my-4">
                         <a href="#" className="text-primary text-right">Lupa kata sandi?</a>
                     </div>
