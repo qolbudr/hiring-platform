@@ -19,8 +19,9 @@ interface JobState {
   setSelectedJob: (job: Job | null) => void
   setRequiredField: (fieldKey: string, required: boolean | undefined) => void,
   createJob: (data: CreateJobFromValues) => Promise<void>
-  getJob: (name: string) => Promise<void>
+  getJob: (name: string, activeOnly: boolean) => Promise<void>
   applyJob: (jobId: string, userId: string, data: { [key: string]: any }) => Promise<void>
+  filterJobs: (status: string) => Promise<void>
 }
 
 export const useJobStore = create<JobState>()(
@@ -56,7 +57,8 @@ export const useJobStore = create<JobState>()(
         const newJob: Job = {
           title: data.jobName,
           slug: data.jobName.toLowerCase().replaceAll(' ', '-'),
-          status: 'active',
+          status: data.status as 'active' | 'inactive' | 'draft',
+          job_type: data.jobType,
           salary_range: {
             min: data.minSalary,
             max: data.maxSalary,
@@ -66,7 +68,7 @@ export const useJobStore = create<JobState>()(
           description: data.jobDescription.split('\n'),
           location: 'Remote',
           list_card: {
-            badge: 'Active',
+            badge: data.status.capitalizeWords(),
             started_on_text: `Started on ${new Date().toLocaleDateString()}`,
             cta: 'Manage Job',
           },
@@ -81,20 +83,22 @@ export const useJobStore = create<JobState>()(
         }
         set({ status: BaseStatus.loading() });
         await jobService.createJob(newJob);
-        await get().getJob('');
+        await get().getJob('', false);
         set({ status: BaseStatus.success() });
       } catch (error: any) {
         set({ status: BaseStatus.error(error.message || 'Failed to create job') });
       }
     },
-    getJob: async (name: string) => {
+    getJob: async (name: string, activeOnly: boolean) => {
       try {
         set({ status: BaseStatus.loading() });
         const jobs = await jobService.getJobs(name);
         if (jobs.length === 0) {
           return set({ jobs, status: BaseStatus.empty('No jobs found') });
         }
-        set({ jobs, status: BaseStatus.success() });
+
+        const filteredJobs: Job[] = activeOnly ? jobs.filter(job => job.status.toLowerCase() === 'active') : jobs;
+        set({ jobs: filteredJobs, status: BaseStatus.success() });
       } catch (error: any) {
         set({ status: BaseStatus.error(error.message || 'Failed to fetch jobs') });
       }
@@ -120,6 +124,8 @@ export const useJobStore = create<JobState>()(
           attributes.push({key, label: key.replaceAll('_', ' ').capitalizeWords(), value: String(value), order: attributes.length + 1});
         });
 
+        attributes.push({key: 'applied_on', label: 'Applied On', value: new Date().toISOString(), order: attributes.length + 1});
+
         const applicationData: Application = {
           job_id: jobId,
           user_id: userId,
@@ -132,5 +138,15 @@ export const useJobStore = create<JobState>()(
       }
     },
     setCapturedPhoto: (photo: string | null) => set({ capturedPhoto: photo }),
+    filterJobs: async (status: string) => {
+      await get().getJob('', false);
+      const allJobs = get().jobs;
+      if (status === 'all') {
+        set({ jobs: allJobs });
+      } else {
+        const filteredJobs = allJobs.filter(job => job.status.toLowerCase() === status.toLowerCase());
+        set({ jobs: filteredJobs });
+      }
+    }
   }),
 )

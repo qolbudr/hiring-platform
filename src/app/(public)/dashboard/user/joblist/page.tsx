@@ -12,11 +12,11 @@ const JobList = (): React.JSX.Element => {
   const store = useJobStore();
 
   useEffect(() => {
-    store.getJob('');
+    store.getJob('', true);
   }, []);
 
   const debounced = useDebouncedCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => store.getJob(e.target.value),
+    (e: React.ChangeEvent<HTMLInputElement>) => store.getJob(e.target.value, true),
     300
   );
 

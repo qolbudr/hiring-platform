@@ -9,6 +9,7 @@ import Select from "@/shared/components/Select";
 import { TextArea } from "@/shared/components/TextArea";
 import { Chip } from "@/shared/components/Chip";
 import { useModalStore } from "@/shared/store/modal.store";
+import { RadioSelector } from "@/shared/components/RadioSelector";
 
 export const ModalCreateJob = () => {
   const store = useJobStore();
@@ -18,6 +19,7 @@ export const ModalCreateJob = () => {
     resolver: zodResolver(createJobSchema),
     defaultValues: {
       jobType: "full_time",
+      status: "active",
     },
     mode: "onChange",
     reValidateMode: "onBlur",
@@ -73,6 +75,16 @@ export const ModalCreateJob = () => {
           {...register("candidatesNeeded", { valueAsNumber: true })}
           error={errors.candidatesNeeded?.message}
           isRequired={true}
+        />
+        <RadioSelector
+          label="Status"
+          value={watch("status")}
+          onChange={(v) => setValue("status", v as CreateJobFromValues["status"])}
+          options={[
+            { label: 'Active', value: 'active' },
+            { label: 'Inactive', value: 'inactive' },
+            { label: 'Draft', value: 'draft' },
+          ]}
         />
         <hr className="border-t border-dashed border-neutral-40 my-4" />
         <label className="block mb-4 text-s">Job Salary</label>

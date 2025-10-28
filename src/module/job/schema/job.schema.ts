@@ -11,6 +11,9 @@ export const createJobSchema = z.object({
     .min(1, "At least 1 candidate is required"),
   minSalary: z.number({ error: "Must be a number" }).min(1, "Minimum salary is required"),
   maxSalary: z.number({ error: "Must be a number" }).min(1, "Maximum salary is required"),
+  status: z.enum(["all", "active", "inactive", "draft"] as const, {
+    message: "Please select a status",
+  }),
 });
 
 export type CreateJobFromValues = z.infer<typeof createJobSchema>;

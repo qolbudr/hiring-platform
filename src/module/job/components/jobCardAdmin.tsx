@@ -16,10 +16,10 @@ export const JobCardAdmin = ({ job, onClick }: JobCardAdminProps): React.JSX.Ele
   const router = useRouter();
 
   return (
-    <div className="w-full p-6 rounded-lg cursor-pointer shadow-md" onClick={onClick}>
+    <div className="w-full p-6 rounded-lg cursor-pointer border border-neutral-30 shadow-md" onClick={onClick}>
       <div className="flex justify-between items-end">
         <div className="space-x-4 space-y-3">
-          <Tags text={job.list_card.badge} variant="outline" type="success"/>
+          <Tags text={job.list_card.badge} variant="outline" type={job.status == 'active' ? "success" : job.status == 'inactive' ? "error" : "warning"} />
           <div className="border inline-flex border-neutral-40 rounded-sm px-4 py-1 text-m text-neutral-90 h-auto">
             {job.list_card.started_on_text}
           </div>

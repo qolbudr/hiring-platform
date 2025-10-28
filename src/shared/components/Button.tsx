@@ -18,7 +18,7 @@ export const Button: React.FC<ButtonProps> = ({ size = 'medium', variant = 'prim
         'border border-neutral-40 text-neutral-90': variant === 'outline',
         'w-full': fullWidth,
     },
-        'cursor-pointer rounded-md transition-colors duration-200 flex items-center',
+        'inline-flex text-center cursor-pointer rounded-md transition-colors duration-200 items-center justify-center',
         props.className,
     )
 

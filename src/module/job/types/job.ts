@@ -3,6 +3,7 @@ export interface Job {
   slug: string;
   title: string;
   status: 'active' | 'inactive' | 'draft';
+  job_type: string;
   salary_range: {
     min: number;
     max: number;
@@ -44,6 +45,7 @@ export namespace Job {
       slug: String(data.slug),
       title: String(data.title),
       status: data.status,
+      job_type: String(data.job_type),
       salary_range: {
         min: Number(data.salary_range?.min ?? 0),
         max: Number(data.salary_range?.max ?? 0),

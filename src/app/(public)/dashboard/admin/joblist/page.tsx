@@ -9,17 +9,18 @@ import { Button } from "@/shared/components/Button";
 import { JobCardAdmin } from "@/module/job/components/jobCardAdmin";
 import { useModalStore } from "@/shared/store/modal.store";
 import { ModalCreateJob } from "@/module/job/components/modalCreateJob";
+import { RadioSelector } from "@/shared/components/RadioSelector";
 
 const JobList = (): React.JSX.Element => {
   const store = useJobStore();
   const modal = useModalStore();
 
   useEffect(() => {
-    store.getJob('');
+    store.getJob('', false);
   }, []);
 
   const debounced = useDebouncedCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => store.getJob(e.target.value),
+    (e: React.ChangeEvent<HTMLInputElement>) => store.getJob(e.target.value, false),
     300
   );
 
@@ -36,13 +37,24 @@ const JobList = (): React.JSX.Element => {
                 suffixicon="uil:search"
               />
 
+              <RadioSelector
+                value="all"
+                options={[
+                  { label: 'All', value: 'all' },
+                  { label: 'Active', value: 'active' },
+                  { label: 'Inactive', value: 'inactive' },
+                  { label: 'Draft', value: 'draft' },
+                ]}
+                onChange={store.filterJobs}
+              />
+
               {store.status.isLoading && (
                 <div className="flex w-full h-full justify-center items-center">
                   <Loader />
                 </div>
               )}
 
-              {!store.status.isLoading && store.status.isEmpty && (
+              {!store.status.isLoading && store.jobs.length === 0 && (
                 <div className="flex w-full h-full justify-center items-center">
                   <div className="text-center">
                     <img src="/illustration/empty.png" alt="empty-illustration" className="w-[300px] mb-4" />
