@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+This repository contains a Next.js + TypeScript hiring platform project built with the app router.
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+A small hiring-platform web application that supports user authentication, job listings, applicant flows, and a simple admin dashboard. The app includes client and server code (Next.js app routes) and basic integrations for file/photo picking and JWT-based authentication.
+
+## Tech Stack Used
+
+- Next.js (App Router)
+- React
+- TypeScript
+- Node.js
+- Zod (validation) — schemas are in module/*/schema
+- JWT for auth (see `shared/lib/jwt.ts`)
+- Firebase utilities present in `shared/lib/firebase.ts` (if used for storage/auth)
+- PostCSS / CSS modules for styling (see `app/globals.css`)
+
+## How to Run Locally
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create a `.env.local` file in the project root and add required environment variables. Example placeholders you should replace with real values:
+
+```
+# Example env variables - replace these with real values used by your setup
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+NEXT_PUBLIC_JWT_SECRET=
+NEXT_PUBLIC_API_BASE_URL=
+```
+
+3. Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Notes:
+- If the project uses Firebase or other third-party services, ensure the corresponding credentials are configured.
+- The API routes live under `src/app/api/*` and expect cookie headers for protected endpoints.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Deployment
 
-## Learn More
+Deploy to Vercel (recommended) or any static/Node host that supports Next.js. Make sure to set the environment variables on the host.
 
-To learn more about Next.js, take a look at the following resources:
+## Where to find important files
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- App entry: `src/app`
+- API routes: `src/app/api`
+- Modules: `src/module` (job, auth, applications)
+- Shared utilities/components: `src/shared`
